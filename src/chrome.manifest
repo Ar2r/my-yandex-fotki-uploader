@@ -1,0 +1,7 @@
+content   myf                 chrome/content/
+skin      myf   classic/1.0   chrome/skin/
+locale    myf   en-US         chrome/locale/en-US/
+
+
+overlay   chrome://webrunner/content/webrunner.xul   chrome://myf/content/overlay.xul
+overlay   chrome://browser/content/browser.xul   chrome://myf/content/overlay.xul

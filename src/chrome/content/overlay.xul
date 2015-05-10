@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://myf/content/style.css"?> 
+<!DOCTYPE overlay >
+<overlay id="myf-overlay" 
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+ <script type="application/x-javascript" src="chrome://global/content/nsDragAndDrop.js"/>
+ <script type="application/x-javascript" src="chrome://global/content/nsTransferable.js"/>
+ <script type="application/x-javascript" src="chrome://myf/content/bigint.js"/>
+ <script type="application/x-javascript" src="chrome://myf/content/utils.js"/>
+ <script type="application/x-javascript" src="chrome://myf/content/yarsa.js"/>
+ <script type="application/x-javascript" src="chrome://myf/content/myf.js"/>
+ 
+ <!-- Firefox -->
+ <statusbar id="status-bar"> <!-- label="noinfo" -->
+  <statusbarpanel 
+	id="myf-status"  
+	tooltiptext="My Yandex.Fotki Uploader:" 
+        insertafter="devToolsSeparator" context="myfmenu">
+        
+	<image id="myf-status-image" width="16" height="16" src="chrome://myf/content/img/wait.png"/>
+	
+	<label style="display:none;" id="myf-lable" class="red" control="label" value="Need check"  />
+
+	</statusbarpanel>
+
+
+ </statusbar>
+
+ <popupset>
+   <menupopup id="myfmenu"> <!--default="true"-->
+	<menuitem label="Settings" oncommand="showPreferences()"/>
+	<menuitem label="Check token" oncommand="checkToken()"/>
+	<menuseparator/>
+	<menuitem name="code_type" type="radio" id="mi_html" label="HTML full"      oncommand="setPref('template', 'html')"/>
+	<menuitem name="code_type" type="radio" id="mi_html_th"  label="HTML thumb"     oncommand="setPref('template', 'html_th')"/>
+
+	<menuitem name="code_type" type="radio" id="mi_bbcode" label="BBcode full"    oncommand="setPref('template', 'bbcode')"/>  
+	<menuitem name="code_type" type="radio" id="mi_bbcode_th"  label="BBcode thumb"   oncommand="setPref('template', 'bbcode_th')"/> 
+   </menupopup>
+ </popupset>
+
+
+<script>
+
+function showPreferences() { 
+
+	if(files_array.length>0)
+	{
+		alert('Upload in progress... No way to change settings :-)');
+		return false;
+	}
+ var instantApply = getBoolPref("browser.preferences.instantApply", false);
+ var features = "chrome,titlebar,toolbar,centerscreen, resizable=no" + (instantApply ? ",dialog=no" : ",modal");
+ var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+                    .getService(Components.interfaces.nsIWindowMediator);
+ var win = wm.getMostRecentWindow("Browser:Preferences");
+ if (win) {
+   win.focus();
+   if (paneID) {
+     var pane = win.document.getElementById(paneID);
+     win.document.documentElement.showPane(pane);
+   }
+ }
+ else
+   openDialog("chrome://myf/content/conf.xul","Preferences", features);
+   checkToken();
+
+
+}
+
+
+
+ 
+
+</script>
+
+
+</overlay>

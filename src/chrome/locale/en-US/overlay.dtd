@@ -1,0 +1,8 @@
+<!ENTITY myf.label "Your localized menuitem">
+<!ENTITY myfContext.label "Your Menuitem">
+<!ENTITY myfContext.accesskey "Y">
+<!ENTITY myfToolbarButton.label "Your Toolbar Button">
+<!ENTITY myfToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY myfSidebar.label "Your Sidebar">
+<!ENTITY myfToolbar.name  "example">
+<!ENTITY myfToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &myfToolbar.name;">

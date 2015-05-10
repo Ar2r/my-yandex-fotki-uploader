@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<prefwindow id="myf-prefs" buttons="accept,cancel,help" style="width: 400px;"
+     title="Myf Settings"
+     onbeforeaccept="getConfToken('close');"
+     ondialoghelp="alert('help');"
+     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+ <script type="application/x-javascript" src="chrome://myf/content/bigint.js"/>
+ <script type="application/x-javascript" src="chrome://myf/content/utils.js"/>
+ <script type="application/x-javascript" src="chrome://myf/content/yarsa.js"/>
+ <script type="application/x-javascript" src="chrome://myf/content/myf.js"/>
+  
+<script>
+
+function DisableLoginInput(event){
+	
+	if(!event)
+	{
+		document.getElementById('symbol_1').removeAttribute('disabled');
+		document.getElementById('symbol_2').removeAttribute('disabled');
+	}
+	else
+	{
+		document.getElementById('symbol_1').setAttribute('disabled','true');
+		document.getElementById('symbol_2').setAttribute('disabled','true');
+	}
+
+}
+
+function confInit()
+{
+	token = getPref('token');
+	//alert('init.conf');
+	if(token.length>0)
+	{
+		//Блокируем поле логина и пароля
+		DisableLoginInput('true');
+	}
+	else
+	{
+		DisableLoginInput();
+	}
+}
+
+window.addEventListener('load', confInit, false);
+</script>
+
+<prefpane id="myf-pane" label="Myf Settings">
+  <preferences>
+	<preference id="pref_login" name="extensions.myf.login" type="string"/>
+	<!--preference id="pref_password" name="extensions.myf.password" type="string"/-->
+	<preference id="pref_token" name="extensions.myf.token" type="string"/>
+	
+	<preference id="pref_auto_templates" name="extensions.myf.auto_templates" type="bool"/>
+
+	<preference id="pref_html" name="extensions.myf.template.html" type="string"/>
+	<preference id="pref_html_th" name="extensions.myf.template.html_th" type="string"/>
+
+	<preference id="pref_bbcode" name="extensions.myf.template.bbcode" type="string"/>
+	<preference id="pref_bbcode_th" name="extensions.myf.template.bbcode_th" type="string"/>
+
+  </preferences>
+ 
+<groupbox>
+  <caption label="Yandex.Fotki account"/>
+  <grid>
+    <columns>
+      <column flex="1"/>
+      <column flex="2"/>
+    </columns>
+    <rows>
+      <row>
+    <label control="symbol_1" value="Login: "/>
+    <textbox preference="pref_login" id="symbol_1" maxlength="255"/>
+      </row>
+      <row>
+    <label control="symbol_2" value="Password: "/>
+    <textbox preference="pref_password" type="password" id="symbol_2" maxlength="255"/>
+      </row>
+
+      <row>
+    <label control="symbol_3" value="Token: "/>
+    <textbox preference="pref_token" id="symbol_3" readonly="true" maxlength="255"/>
+      </row>
+	<row>
+    <label control="symbol_3" value="Actions: "/>
+    <hbox>
+    <button flex="1" label="Get Token" oncommand="getConfToken();" /><button flex="1" label="Clear Token" oncommand="setPref('token','');checkToken(); DisableLoginInput();" />
+    </hbox>
+	</row>
+
+    <!--row>
+    <label control="symbol" value="Templates: "/>
+    <checkbox preference="pref_auto_templates" label="Auto Detect"/>
+    </row-->
+
+
+    </rows>
+  </grid>
+</groupbox>
+
+<vbox>
+<groupbox>
+<description style="color: red;text-align: center;">
+Внимание. Пароль нигде не сохраняется, а перед отправкой на сервер авторизации происходит его шифрование. Пароль нужен для получения временного ключа.
+</description>
+</groupbox>
+</vbox>
+
+<script>
+
+</script>
+
+
+<groupbox>
+  <caption label="Custom Templates"/>
+  <grid>
+    <columns>
+      <column flex="1"/>
+      <column flex="2"/>
+    </columns>
+    <rows>
+      <row>
+    <label control="symbol" value="HTML: "/>
+    <textbox preference="pref_html" id="symbol" rows="1" multiline="true"/>
+      </row>
+
+      <row>
+    <label control="symbol" value="HTML Thumb: "/>
+    <textbox preference="pref_html_th" id="symbol" rows="1" multiline="true"/>
+      </row>
+
+      <row>
+    <label control="symbol" value="BBcode: "/>
+    <textbox preference="pref_bbcode" id="symbol" rows="1" multiline="true"/>
+      </row>
+
+      <row>
+    <label control="symbol" value="BBcode Thumb: "/>
+    <textbox preference="pref_bbcode_th" id="symbol" rows="1" multiline="true"/>
+      </row>
+
+      <row>
+    <label control="symbol" value="Macros: "/>
+
+<textbox id="multiline" multiline="true" rows="3" cols="40" value="%PATH% - Оригинальный размер, 
+%PATH_XL% - 800px, 
+%PATH_L% - 500px, 
+%PATH_M% - 300px, 
+%PATH_S% - 150px, 
+%PATH_XS% - 100px, 
+%PATH_XXS% - 75px, 
+%PATH_XXXS% - 50px, %FILENAME% - имя файла"/>
+      </row>
+
+    </rows>
+  </grid>
+</groupbox>
+
+
+
+
+</prefpane>
+</prefwindow>
